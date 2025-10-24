@@ -1,0 +1,33 @@
+# .pages.yml
+media:
+  - name: media
+    label: Media
+    input: src/media
+    output: /media
+    path: /media
+
+content:
+  - name: blog
+    label: Blog posts
+    type: collection
+    path: src/content/blog
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: pubDate
+        label: Publication date
+        type: date
+        required: true
+      - name: description
+        label: Description
+        type: text
+      - name: tags
+        label: Tags
+        type: list
+        items:
+          type: string
+      - name: body
+        label: Body
+        type: rich-text
