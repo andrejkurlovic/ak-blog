@@ -1,10 +1,12 @@
 # .pages.yml
 media:
-  - name: media
-    label: Media
-    input: src/media
-    output: /media
-    path: /media
+  # Lets you upload any assets used by posts
+  - name: assets
+    label: Assets
+    input: src/assets
+    output: /assets
+    path: /assets
+    categories: [image, document, audio, video]
 
 content:
   - name: blog
@@ -16,18 +18,26 @@ content:
         label: Title
         type: string
         required: true
-      - name: pubDate
-        label: Publication date
-        type: date
-        required: true
       - name: description
         label: Description
         type: text
+      - name: pubDate
+        label: Published on
+        type: date
+        required: true
+      - name: updatedDate
+        label: Updated on
+        type: date
+        required: false
       - name: tags
         label: Tags
         type: list
         items:
           type: string
+      - name: cover
+        label: Cover image path (e.g. "@/assets/blogimages/my-post/cover.jpg")
+        type: string
+        description: 'Paste an "@/assets/..." path (see step 4).'
       - name: body
         label: Body
         type: rich-text
