@@ -3,7 +3,6 @@ import NavbarLink from './NavbarLink.astro'
 import { Icon } from 'astro-icon/components'
 import ThemeSelector from './ThemeSelector.astro'
 import { WebsiteLinks } from '../consts'
-import LogoSVG from '../assets/logo.svg'
 
 // Helper: decide if a link is external
 const isExternal = (url: string) => /^https?:\/\//i.test(url)
@@ -11,9 +10,20 @@ const isExternal = (url: string) => /^https?:\/\//i.test(url)
 <header class="fixed top-0 w-full z-40 bg-background dark:bg-background-dark">
   <nav>
     <div class="app-container flex justify-between items-center py-5">
-      <!-- Brand/logo: always root -->
-      <a href="/" aria-label="Home">
-        <LogoSVG height={36} width={36} />
+      <!-- Brand/logo: auto-switches for dark/light -->
+      <a href="/" aria-label="Home" class="inline-flex items-center gap-2">
+        <picture>
+          <source srcset="/logo-dark.svg" media="(prefers-color-scheme: dark)" />
+          <img
+            src="/logo-light.svg"
+            alt="Andrej Kurlovic logo"
+            width="36"
+            height="36"
+            loading="eager"
+            decoding="sync"
+            class="transition-transform hover:scale-105"
+          />
+        </picture>
       </a>
 
       <!-- Desktop nav -->
@@ -127,7 +137,7 @@ const isExternal = (url: string) => /^https?:\/\//i.test(url)
   window.matchMedia('(prefers-color-scheme: dark)')
     .addEventListener('change', (_e) => reComputeTheme())
 
-  // Re-bind when crossing md breakpoint (matches original behavior)
+  // Re-bind on md breakpoint
   window.matchMedia('(min-width: 768px)')
     .addEventListener('change', (_e) => {
       addThemeEventListeners()

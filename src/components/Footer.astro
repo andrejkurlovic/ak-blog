@@ -1,9 +1,11 @@
 ---
 import { SocialLinks, WebsiteLinks } from '../consts'
-import LogoSVG from '../assets/logo.svg'
 import { Icon } from 'astro-icon/components'
 
 const today = new Date()
+
+// Helper: decide if a link is external
+const isExternal = (url: string) => /^https?:\/\//i.test(url)
 ---
 
 <footer>
@@ -12,7 +14,17 @@ const today = new Date()
   >
     <div>
       <a href="/" class="block w-fit" aria-label="Home">
-        <LogoSVG height={36} width={36} />
+        <picture>
+          <source srcset="/logo-dark.svg" media="(prefers-color-scheme: dark)" />
+          <img
+            src="/logo-light.svg"
+            alt="Andrej Kurlovic logo"
+            width="36"
+            height="36"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
       </a>
     </div>
 
@@ -24,8 +36,8 @@ const today = new Date()
             <a
               class="text-lg"
               href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
+              target={isExternal(link.url) ? '_blank' : undefined}
+              rel={isExternal(link.url) ? 'noopener noreferrer' : undefined}
             >
               {link.name}
             </a>
@@ -64,12 +76,10 @@ const today = new Date()
 
   <div class="app-container flex justify-between items-center pb-6 text-center">
     <p class="text-left md:text-center w-full">
-      © {today.getFullYear()} 
+      © {today.getFullYear()}
       <a
         class="underline hover:no-underline"
-        href="https://kurlovic.co.uk"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/"
       >
         Andrej Kurlovic
       </a>
