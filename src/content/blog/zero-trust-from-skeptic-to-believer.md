@@ -1,7 +1,7 @@
 ---
 title: "💡 Zero Trust — From Skeptic to Believer"
 description: "A practical look at how one cybersecurity leader turned Zero Trust from an overhyped buzzword into a core part of modern enterprise resilience."
-pubDate: 2025-10-24
+pubDate: 2025-10-11
 tags: ["Zero Trust", "Cybersecurity", "Access Control", "Leadership", "Security Strategy"]
 image: "/blog-images/zero-trust.png"
 ---

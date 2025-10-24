@@ -1,7 +1,7 @@
 ---
 title: "🧠 Phishing’s Back — And It’s Smarter."
 description: "GenAI has made phishing emails terrifyingly convincing. Here's what’s changing in the inbox, and why old defences aren’t enough anymore."
-pubDate: 2025-10-24
+pubDate: 2025-10-14
 tags: ["Phishing", "Cybersecurity", "Email Security", "GenAI", "Threat Intelligence"]
 image: "/blog-images/phishings-back.png"
 ---
