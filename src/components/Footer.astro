@@ -4,7 +4,6 @@ import { Icon } from 'astro-icon/components'
 
 const today = new Date()
 
-// Helper: decide if a link is external
 const isExternal = (url: string) => /^https?:\/\//i.test(url)
 ---
 
@@ -77,10 +76,7 @@ const isExternal = (url: string) => /^https?:\/\//i.test(url)
   <div class="app-container flex justify-between items-center pb-6 text-center">
     <p class="text-left md:text-center w-full">
       © {today.getFullYear()}
-      <a
-        class="underline hover:no-underline"
-        href="/"
-      >
+      <a class="underline hover:no-underline" href="/">
         Andrej Kurlovic
       </a>
     </p>
