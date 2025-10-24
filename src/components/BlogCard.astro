@@ -1,40 +1,46 @@
 ---
-import { SITE_BASE } from '@/consts'
 import FormattedDate from './FormattedDate.astro'
-import type { ImageMetadata } from 'astro'
-import { Image } from 'astro:assets'
 
-const { post } = Astro.props
+type Post = {
+  slug: string
+  data: {
+    title: string
+    description: string
+    pubDate: Date
+    image?: string
+  }
+}
 
-const blogImages = import.meta.glob<{ default: ImageMetadata }>(
-	'/src/assets/blogimages/**/*.{jpeg,jpg,png,gif}'
-)
+const { post } = Astro.props as { post: Post }
 
-const coverImagePath = `/src/assets/blogimages/${post.slug}/cover.jpg`
+// Prefer explicit frontmatter image if set.
+// Otherwise try common fallbacks in /public/blog-images/.
+const explicit = post.data.image // e.g., "/blog-images/zero-trust.png"
+const fallbackPng = `/blog-images/${post.slug}.png`
+const fallbackJpg = `/blog-images/${post.slug}.jpg`
+const imageSrc = explicit || fallbackPng // we’ll swap to jpg in onerror if png fails
 ---
 
-<a
-	href={`${SITE_BASE}/blog/${post.slug}/`}
-	class="flex flex-col gap-4 pb-8 h-full group transition-colors"
->
-	{
-		blogImages[coverImagePath] && (
-			<Image
-				src={blogImages[coverImagePath]()}
-				alt={post.data.title}
-				class="object-cover rounded-xl aspect-video"
-			/>
-		)
-	}
-	<h4
-		class="text-2xl font-semibold group-hover:text-primary dark:group-hover:text-primary-dark group-hover:underline transition-colors"
-	>
-		{post.data.title}
-	</h4>
-	<p class="line-clamp-3 opacity-80">
-		{post.data.description}
-	</p>
-	<p class="uppercase text-sm mt-auto tracking-tight">
-		<FormattedDate date={post.data.pubDate} />
-	</p>
+<a href={`/blog/${post.slug}/`} class="flex flex-col gap-4 pb-8 h-full group transition-colors">
+  <!-- Image (optional). If it 404s, try jpg; if that fails, hide it. -->
+  <img
+    src={imageSrc}
+    alt={post.data.title}
+    loading="lazy"
+    decoding="async"
+    class="object-cover rounded-xl aspect-video border border-foreground/10 dark:border-foreground-dark/10"
+    onerror={`if (this.src.endsWith('.png')) { this.src='${fallbackJpg}'; } else { this.style.display='none'; }`}
+  />
+
+  <h4 class="text-2xl font-semibold group-hover:text-primary dark:group-hover:text-primary-dark group-hover:underline transition-colors">
+    {post.data.title}
+  </h4>
+
+  <p class="line-clamp-3 opacity-80">
+    {post.data.description}
+  </p>
+
+  <p class="uppercase text-sm mt-auto tracking-tight">
+    <FormattedDate date={post.data.pubDate} />
+  </p>
 </a>
